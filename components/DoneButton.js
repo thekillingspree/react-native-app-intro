@@ -1,7 +1,6 @@
 import React from 'react'
 import {
   Text,
-  View,
   TouchableOpacity,
   Animated
 } from 'react-native';
@@ -9,40 +8,28 @@ import {
 export const DoneButton = ({
   styles, onDoneBtnClick, onNextBtnClick,
   rightTextColor, isDoneBtnShow,
+  skipFadeOpacity,
+  doneFadeOpacity, nextOpacity,
   doneBtnLabel, nextBtnLabel,
-  doneFadeOpacity, skipFadeOpacity, nextOpacity
 }) => {
+  const transform = [{
+    translateX: skipFadeOpacity.interpolate({
+      inputRange: [0, 1],
+      outputRange: [20, 0],
+    }),
+  }]
   return (
-    <View style={styles.btnContainer}>
-      <Animated.View style={[styles.full, { height: 0 }, {
-        opacity: doneFadeOpacity,
-        transform: [{
-          translateX: skipFadeOpacity.interpolate({
-            inputRange: [0, 1],
-            outputRange: [0, 20],
-          }),
-        }],
-      }]}
+    <Animated.View style={[styles.btnContainer, { height: 0, paddingBottom:  0, }, {
+      opacity: doneFadeOpacity }]}>
+      <TouchableOpacity style={styles.full}
+        onPress={ onDoneBtnClick}
       >
-        <View style={styles.full}>
-          <Text style={[styles.controllText, {
-            color: rightTextColor, paddingRight: 30,
-          }]}>
-            {doneBtnLabel}
-          </Text>
-        </View>
-      </Animated.View>
-      <Animated.View style={[styles.full, { height: 0 }, { opacity: nextOpacity }]}>
-        <TouchableOpacity style={styles.full}
-          onPress={ isDoneBtnShow ? onDoneBtnClick : onNextBtnClick}>
-         <Text style={[styles.nextButtonText, { color: rightTextColor }]}>
-          {nextBtnLabel}
-        </Text>
-        </TouchableOpacity>
-      </Animated.View>
-    </View>
+       <Text style={[styles.controllText, { color: rightTextColor, paddingRight: 30 }]}>
+         {doneBtnLabel}
+       </Text>
+      </TouchableOpacity>
+    </Animated.View>
   )
 }
 
 export default DoneButton
-        

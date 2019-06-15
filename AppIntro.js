@@ -1,6 +1,7 @@
 import assign from 'assign-deep';
 import React, { Component } from 'react';
 import PropTypes from 'prop-types';
+
 import {
   StatusBar,
   StyleSheet,
@@ -13,8 +14,9 @@ import {
   Platform,
 } from 'react-native';
 import Swiper from 'react-native-swiper';
-import DoneButton from './components/DoneButton';
+import DoneButton from 'react-native-app-intro/components/DoneButton.android';
 import SkipButton from './components/SkipButton';
+import NextButton from './components/NextButton';
 import RenderDots from './components/Dots';
 
 const windowsWidth = Dimensions.get('window').width;
@@ -86,6 +88,14 @@ const defaulStyles = {
     justifyContent: 'center',
     alignItems: 'center',
   },
+  nextContainer: {
+    position: 'absolute',
+    height: Dimensions.get('window').width,
+    width: 50,
+    justifyContent: 'center',
+    top: Dimensions.get('window').width / 2,
+    right: 10
+  },
   btnContainer: {
     flex: 0.2,
     justifyContent: 'center',
@@ -95,9 +105,10 @@ const defaulStyles = {
   nextButtonText: {
     fontSize: 25,
     fontWeight: 'bold',
+    //fontFamily: 'Arial',
   },
   full: {
-    height: 80,
+    height: 30,
     width: 100,
     justifyContent: 'center',
     alignItems: 'center',
@@ -140,7 +151,7 @@ export default class AppIntro extends Component {
   setDoneBtnOpacity = (value) => {
     Animated.timing(
       this.state.doneFadeOpacity,
-      { toValue: value },
+      { toValue: value},
     ).start();
   }
 
@@ -189,18 +200,18 @@ export default class AppIntro extends Component {
   renderPagination = (index, total, context) => {
     let isDoneBtnShow;
     let isSkipBtnShow;
-    if (index === total - 1) {
-      this.setDoneBtnOpacity(1);
-      this.setSkipBtnOpacity(0);
-      this.setNextOpacity(0);
-      isDoneBtnShow = true;
-      isSkipBtnShow = false;
-    } else {
+    if (index !== total - 1) {
+      this.setNextOpacity(1);
       this.setDoneBtnOpacity(0);
       this.setSkipBtnOpacity(1);
-      this.setNextOpacity(1);
       isDoneBtnShow = false;
       isSkipBtnShow = true;
+    } else {
+      this.setNextOpacity(0);
+      this.setDoneBtnOpacity(1);
+      this.setSkipBtnOpacity(0);
+      isDoneBtnShow = true;
+      isSkipBtnShow = false;
     }
     return (
       <View style={[this.styles.paginationContainer]}>
@@ -216,13 +227,21 @@ export default class AppIntro extends Component {
           ...this.props,
           styles: this.styles
         })}
-        {this.props.showDoneButton ? <DoneButton
+        {this.props.showDoneButton ? <View style={[this.styles.btnContainer, {}]}><DoneButton
+          {...this.props}
+          {...this.state}
+          isDoneBtnShow={isDoneBtnShow}
+          styles={this.styles}
+          onDoneBtnClick={() => this.props.onDoneBtnClick()} /> 
+         {/* 
+          TODO: Find fix.
+          <NextButton
             {...this.props}
             {...this.state}
             isDoneBtnShow={isDoneBtnShow}
             styles={this.styles}
             onNextBtnClick={this.onNextBtnClick.bind(this, context)}
-            onDoneBtnClick={this.props.onDoneBtnClick} /> :
+         /> */}</View> :
             <View style={this.styles.btnContainer} />
           }
       </View>
@@ -347,7 +366,7 @@ export default class AppIntro extends Component {
             if (this.isToTintStatusBar()) {
               StatusBar.setBackgroundColor(this.shadeStatusBarColor(this.props.pageArray[state.index].backgroundColor, -0.3), false);
             }
-
+            
             this.props.onSlideChange(state.index, state.total);
           }}
           onScroll={Animated.event(
