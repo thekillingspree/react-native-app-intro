@@ -20,7 +20,7 @@ export const DoneButton = ({
   }]
   return (
     <Animated.View style={[styles.btnContainer, { height: 0, paddingBottom:  0, }, {
-      opacity: doneFadeOpacity }]}>
+      opacity: doneFadeOpacity, transform }]}>
       <TouchableOpacity style={styles.full}
         onPress={ onDoneBtnClick}
       >
