@@ -14,7 +14,7 @@ import {
   Platform,
 } from 'react-native';
 import Swiper from 'react-native-swiper';
-import DoneButton from 'react-native-app-intro/components/DoneButton.android';
+import DoneButton from './components/DoneButton';
 import SkipButton from './components/SkipButton';
 import NextButton from './components/NextButton';
 import RenderDots from './components/Dots';
