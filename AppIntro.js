@@ -317,7 +317,7 @@ export default class AppIntro extends Component {
   }
 
   isToTintStatusBar() {
-    return this.props.pageArray && this.props.pageArray.length > 0 && Platform.OS === 'android'
+    return this.props.changeStatusBarColor && this.props.pageArray && this.props.pageArray.length > 0 && Platform.OS === 'android'
   }
 
   render() {
@@ -382,6 +382,7 @@ export default class AppIntro extends Component {
 
 AppIntro.propTypes = {
   dotColor: PropTypes.string,
+  changeStatusBarColor: PropTypes.bool,
   activeDotColor: PropTypes.string,
   rightTextColor: PropTypes.string,
   leftTextColor: PropTypes.string,
@@ -423,6 +424,7 @@ AppIntro.defaultProps = {
   skipBtnLabel: 'Skip',
   nextBtnLabel: '›',
   defaultIndex: 0,
+  changeStatusBarColor:true,
   showSkipButton: true,
   showDoneButton: true,
   showDots: true
