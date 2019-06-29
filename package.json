@@ -1,14 +1,14 @@
 {
-  "name": "react-native-app-intro",
+  "name": "react-native-parallax-onboarding",
   "version": "1.1.5",
-  "description": "react-native-app-intro is a react native plugin implementing a parallax effect welcome page using base on react-native-swiper , similar to the one found in Google's app like Sheet, Drive, Docs...",
+  "description": "react-native-parallax-onboarding is a react native plugin implementing a parallax effect welcome page using base on react-native-swiper , similar to the one found in Google's app like Sheet, Drive, Docs...",
   "main": "AppIntro.js",
   "scripts": {
     "test": "echo \"Error: no test specified\" && exit 1"
   },
   "repository": {
     "type": "git",
-    "url": "git+https://github.com/fuyaode/react-native-app-intro.git"
+    "url": "git+https://github.com/thekillingspree/react-native-parallax-onboarding.git"
   },
   "keywords": [
     "swiper",
